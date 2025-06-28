@@ -49,7 +49,7 @@ def get_unique_projects(projects):
 
 # Home Page – show 3 random projects
 def index(request):
-    github_projects = fetch_github_repos("singhdavinderdeosi")
+    github_projects = fetch_github_repos("your_github")
     unique_projects = get_unique_projects(github_projects)
     featured = random.sample(unique_projects, min(3, len(unique_projects)))
 
@@ -62,7 +62,7 @@ def index(request):
 
 # Projects Page – all GitHub repos
 def projects(request):
-    github_projects = fetch_github_repos("singhdavinderdeosi")
+    github_projects = fetch_github_repos("your_github")
     all_projects = get_unique_projects(github_projects)
     return render(request, 'projects.html', {
         'projects': all_projects

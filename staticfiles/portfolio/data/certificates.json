@@ -1,51 +1,10 @@
 [
   {
-    "name": "Ethical Hacking Essential",
-    "issuer": "EC-Council",
+    "name": "Certification name",
+    "issuer": "Issuer name",
     "year": "2024",
-    "link": "certs/EHE.png",
-    "image": "EHE.png"
-  },
-  {
-    "name": "Digital Forensics",
-    "issuer": "Cyber Labs Academy",
-    "year": "2024",
-    "link": "certs/Digital_Forensics_Fundamental.png",
-    "image": "Digital_Forensics_Fundamental.png"
-  },
-  {
-    "name": "Python Programming",
-    "issuer": "Infosys Springboard",
-    "year": "2024",
-    "link": "certs/Basics_of_python.png",
-    "image": "Basics_of_python.png"
-  },
-  {
-    "name": "Level 3 Cyber Security",
-    "issuer": "Skill India",
-    "year": "2024",
-    "link": "certs/Skill_india_cyber_security.png",
-    "image": "Skill_india_cyber_security.png"
-  },
-  {
-    "name": "Python Programming Fundamentals 1",
-    "issuer": "Infosys Springboard",
-    "year": "2024",
-    "link": "certs/Programming_python_fundamentals_1.png",
-    "image": "Programming_python_fundamentals_1.png"
-  },
-  {
-    "name": "Python Programming Fundamentals 2",
-    "issuer": "Infosys Springboard",
-    "year": "2024",
-    "link": "certs/Programming_python_fundamentals_2.png",
-    "image": "Programming_python_fundamentals_2.png"
-  },
-  {
-    "name": "Training of Cyber Security",
-    "issuer": "Ansh Infotech",
-    "year": "2024",
-    "link": "certs/Training_of_cyber_security.png",
-    "image": "Training_of_cyber_security.png"
+    "link": "certs/cert1.png",
+    "image": "certs/cert1.png"
   }
 ]
+

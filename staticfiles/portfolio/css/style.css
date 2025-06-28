@@ -14,6 +14,7 @@ html, body {
   color: #F6F6F6;
   scroll-behavior: smooth;
   overflow-x: hidden;
+  cursor: none;
 }
 
 /* === Scroll Progress Bar === */
@@ -99,7 +100,7 @@ html, body {
   padding-top: 80px;
   position: relative;
   background: linear-gradient(rgba(13, 13, 13, 0.85), rgba(13, 13, 13, 0.85)),
-              url('{% static "portfolio/images/background.jpg" %}') center/cover no-repeat;
+              url('{% static "portfolio/images/background_1.jpg" %}') center/cover no-repeat;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -1206,3 +1207,18 @@ footer {
   background-size: 20px;
   padding-right: 40px;
 }
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background: #fde4c3;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 8px #fde4c3, 0 0 16px #E50914;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s ease;
+}
+

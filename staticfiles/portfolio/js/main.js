@@ -37,9 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   updateScrollProgress();
 
-  // === Typing Effect ===
-  const roles = ['Web Developer 💻', 'Python Programmer 🐍', 'Cybersecurity Enthusiast 🔐'];
+  // === Typing Effect (Hero) ===
   const typingEl = document.getElementById('typing');
+  const roles = ['Web Developer 💻', 'Python Programmer 🐍', 'Cybersecurity Enthusiast 🔐'];
   let roleIndex = 0, charIndex = 0;
   function typeRole() {
     if (!typingEl) return;
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('capsuleWelcomeShown', 'true');
   }
 
-  // === Skill Bars Animation ===
+  // === Skills Bar Animation ===
   const skillBars = document.querySelectorAll('.fill');
   const skillObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -87,32 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const skillSection = document.querySelector('.skills-section, .skills-container');
   if (skillSection) skillObserver.observe(skillSection);
 
-  // === View All Button ===
-  const setupToggle = (selector, limit = 3) => {
-    const container = document.querySelector(selector);
-    if (!container) return;
-    const items = [...container.children];
-    if (items.length <= limit) return;
-
-    items.forEach((el, i) => { if (i >= limit) el.style.display = 'none'; });
-
-    const btn = document.createElement('button');
-    btn.className = 'link-button';
-    btn.textContent = 'View All';
-    container.parentNode.appendChild(btn);
-
-    let expanded = false;
-    btn.addEventListener('click', () => {
-      expanded = !expanded;
-      items.forEach((el, i) => {
-        if (i >= limit) el.style.display = expanded ? 'block' : 'none';
-      });
-      btn.textContent = expanded ? 'Hide' : 'View All';
-    });
-  };
-  setupToggle('.project-grid', 3);
-
-  // === Scroll Reveal Animation ===
+  // === Scroll Reveal ===
   const revealEls = document.querySelectorAll('.scroll-fade, .flip-card');
   const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -170,11 +145,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // === Certificate Filtering ===
+  const searchInput = document.getElementById('cert-search');
+  const yearFilter = document.getElementById('cert-year');
+  const issuerFilter = document.getElementById('cert-issuer');
+  const certCards = document.querySelectorAll('.flip-card[data-year]');
+
+  if (searchInput && yearFilter && issuerFilter && certCards.length) {
+    const years = new Set();
+    const issuers = new Set();
+
+    certCards.forEach(card => {
+      years.add(card.dataset.year);
+      issuers.add(card.dataset.issuer);
+    });
+
+    [...years].sort().forEach(y => {
+      yearFilter.innerHTML += `<option value="${y}">${y}</option>`;
+    });
+    [...issuers].sort().forEach(i => {
+      issuerFilter.innerHTML += `<option value="${i}">${i}</option>`;
+    });
+
+    function filterCards() {
+      const query = searchInput.value.toLowerCase();
+      const year = yearFilter.value;
+      const issuer = issuerFilter.value;
+
+      certCards.forEach(card => {
+        const nameMatch = card.dataset.name.toLowerCase().includes(query);
+        const yearMatch = year === 'all' || card.dataset.year === year;
+        const issuerMatch = issuer === 'all' || card.dataset.issuer === issuer;
+        card.style.display = (nameMatch && yearMatch && issuerMatch) ? 'block' : 'none';
+      });
+    }
+
+    searchInput.addEventListener('input', filterCards);
+    yearFilter.addEventListener('change', filterCards);
+    issuerFilter.addEventListener('change', filterCards);
+  }
+
   // === Certificate Carousel ===
   initCertificateCarousel(3, 5000);
 });
 
-// === Dev Typing Animation ===
+// === Dev Section Typing Effect ===
+const devTypingEl = document.getElementById("devTyping");
 const devLines = [
   "Building full-stack Projects...",
   "Designing responsive Web Pages...",
@@ -182,7 +198,6 @@ const devLines = [
   "Python Programming..."
 ];
 let devIndex = 0, devChar = 0;
-const devTypingEl = document.getElementById("devTyping");
 function typeDev() {
   if (!devTypingEl) return;
   const line = devLines[devIndex];
@@ -201,7 +216,7 @@ function eraseDev() {
 }
 if (devTypingEl) typeDev();
 
-// === Certificate Carousel Function ===
+// === Certificate Carousel Logic ===
 function initCertificateCarousel(limit = 3, interval = 5000) {
   const container = document.getElementById('certificate-carousel');
   const prevBtn = document.getElementById('cert-prev');
@@ -240,26 +255,33 @@ function initCertificateCarousel(limit = 3, interval = 5000) {
   const startAuto = () => { carouselInterval = setInterval(next, interval); };
   const stopAuto = () => { clearInterval(carouselInterval); };
 
-  // Touch support
+  container.addEventListener('mouseenter', stopAuto);
+  container.addEventListener('mouseleave', startAuto);
+  nextBtn?.addEventListener('click', () => { stopAuto(); next(); });
+  prevBtn?.addEventListener('click', () => { stopAuto(); prev(); });
+
+  // Touch Support
   let touchStartX = 0;
-  container.addEventListener('touchstart', e => {
-    touchStartX = e.changedTouches[0].screenX;
-  });
+  container.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
   container.addEventListener('touchend', e => {
-    const touchEndX = e.changedTouches[0].screenX;
-    const deltaX = touchEndX - touchStartX;
+    const deltaX = e.changedTouches[0].screenX - touchStartX;
     if (Math.abs(deltaX) > 40) {
       stopAuto();
       deltaX < 0 ? next() : prev();
     }
   });
 
-  nextBtn?.addEventListener('click', () => { stopAuto(); next(); });
-  prevBtn?.addEventListener('click', () => { stopAuto(); prev(); });
-
-  container.addEventListener('mouseenter', stopAuto);
-  container.addEventListener('mouseleave', startAuto);
-
   showCards();
   startAuto();
 }
+// === Glowing Animated Cursor ===
+document.addEventListener('DOMContentLoaded', () => {
+  const cursor = document.createElement('div');
+  cursor.classList.add('custom-cursor');
+  document.body.appendChild(cursor);
+
+  document.addEventListener('mousemove', e => {
+    cursor.style.top = `${e.clientY}px`;
+    cursor.style.left = `${e.clientX}px`;
+  });
+});

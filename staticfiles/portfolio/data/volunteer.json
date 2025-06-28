@@ -1,30 +1,9 @@
 [
   {
-    "role": "Convenor",
-    "org": "Computonics Club, GNDEC",
-    "date": "Jan–Jun 2025",
-    "details": "Directed multiple events for the club and designed official brochures, rule books also.",
-    "image": "Convenor.png"
-  },
-  {
-    "role": "Co-Convenor",
-    "org": "Computonics Club",
-    "date": "Jul–Dec 2024",
-    "details": "Headed all events in 2024,including seminars.",
-    "image": "Co-Convenor.png"
-  },
-  {
-    "role": "Core Executive",
-    "org": "Cultural Committee",
-    "date": "Event Management",
-    "details": "Managed large-scale cultural events like Anand Utsaav 2025 and PTU Youth Fest 2024 as Music Co-ordinator.",
-    "image": "Core.jpg"
-  },
-  {
-    "role": "Social Media Head",
-    "org": "Computonics Club",
-    "date": "Jan–Jun 2024",
-    "details": "Led digital promotion strategies, campaigns, and event coverage on social platforms.",
-    "image": "Social_Media_Team_member.png"
+    "role": "Volunteer",
+    "org": "CodeChef VIT",
+    "date": "2022 - 2023",
+    "details": "Served as a volunteer for CodeChef VIT, contributing to the organization of coding events and workshops.",
+    "image": "volunteer/codechef_vit.png"
   }
 ]
