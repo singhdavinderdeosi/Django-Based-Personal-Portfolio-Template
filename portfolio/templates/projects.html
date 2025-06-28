@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Projects | Davinder Singh</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'portfolio/css/style.css' %}">
+  <link rel="icon" href="{% static 'portfolio/images/favicon.png' %}">
+  <style>
+    body {
+      position: relative;
+      background: transparent;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: url("{% static 'portfolio/images/bg.jpg' %}") center center / cover no-repeat fixed;
+      filter: blur(10px) brightness(0.4);
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <div id="scroll-progress"></div>
+
+  <!-- Pill Glass Navbar -->
+  <nav class="pill-navbar">
+    <img src="{% static 'portfolio/images/avatar.png' %}" class="navbar-avatar" alt="Avatar">
+    <span class="brand">Davinder Singh</span>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'projects' %}" class="active">Projects</a>
+    <a href="{% url 'certificates' %}">Certificates</a>
+    <a href="{% url 'home' %}#contact">Contact</a>
+  </nav>
+
+  <!-- All GitHub Projects Section -->
+  <section class="section scroll-fade" style="padding: 100px 20px;">
+    <div class="container" style="max-width: 1200px; margin: auto;">
+
+      <div style="text-align: right; margin-bottom: -30px;">
+        <a href="{% url 'home' %}#projects" class="section-label text-link">← Back</a>
+      </div>
+
+      <h2 class="section-title center">🧠 All GitHub Projects</h2>
+      <p class="section-description center">
+        These are all public repositories fetched directly from GitHub.
+      </p>
+
+      <div class="card-container flip-container" style="justify-content: center;">
+        {% for p in projects %}
+        <div class="flip-card scroll-fade">
+          <div class="flip-card-inner">
+
+            <!-- Front -->
+            <div class="flip-card-front glass-card">
+              <h3>{{ p.title }}</h3>
+              <p style="font-size: 0.95rem; color: #ccc;">
+                {{ p.description|default:"No description available." }}
+              </p>
+            </div>
+
+            <!-- Back -->
+            <div class="flip-card-back" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <img 
+                src="{% if p.image %}{{ p.image }}{% elif 'github.com' in p.link %}https://opengraph.githubassets.com/1/{{ p.link|cut:'https://github.com/' }}{% else %}{% static 'portfolio/images/projects/default.png' %}{% endif %}" 
+                alt="{{ p.title }}" 
+                style="width: 100%; max-height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 0 10px rgba(0,0,0,0.3);">
+              <div style="display: flex; justify-content: center;">
+                <a href="{{ p.link }}" target="_blank" class="text-link glow-link">🔗 GitHub</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section>
+
+  <script src="{% static 'portfolio/js/main.js' %}"></script>
+</body>
+</html>

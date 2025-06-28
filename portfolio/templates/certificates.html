@@ -1,0 +1,167 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Certificates | Davinder Singh</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'portfolio/css/style.css' %}">
+  <link rel="icon" href="{% static 'portfolio/images/favicon.png' %}">
+  <style>
+    body {
+      position: relative;
+      background: transparent;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: url("{% static 'portfolio/images/bg1.avif' %}") center center / cover no-repeat fixed;
+      filter: blur(10px) brightness(0.4);
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <div id="scroll-progress"></div>
+
+  <!-- Floating Pill Navbar -->
+  <nav class="pill-navbar">
+    <img src="{% static 'portfolio/images/avatar.png' %}" class="navbar-avatar" alt="Avatar">
+    <span class="brand">Davinder Singh</span>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'projects' %}">Projects</a>
+    <a href="{% url 'certificates' %}" class="active">Certificates</a>
+    <a href="{% url 'home' %}#contact">Contact</a>
+  </nav>
+
+  <!-- All Certificates Section -->
+  <section id="certificates" class="section" style="padding: 100px 20px;">
+    <div class="container" style="max-width: 1100px; margin: 0 auto;">
+      <h2 class="section-title" style="text-align: center; margin-bottom: 40px;">📜 All Certificates</h2>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <input type="text" id="cert-search" placeholder="🔍 Search certificates..." aria-label="Search certificates" class="filter-input" />
+        <select id="cert-year" aria-label="Filter by year" class="filter-select">
+          <option value="all">All Years</option>
+        </select>
+        <select id="cert-issuer" aria-label="Filter by issuer" class="filter-select">
+          <option value="all">All Issuers</option>
+        </select>
+      </div>
+
+      <!-- Certificate Flip Cards -->
+      <div id="cert-container" class="card-container flip-container" style="justify-content: center;">
+        {% for cert in certificates %}
+        <div class="flip-card scroll-fade" data-name="{{ cert.name }}" data-year="{{ cert.year }}" data-issuer="{{ cert.issuer }}">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <h3>{{ cert.name }}</h3>
+              <p>{{ cert.issuer }} ({{ cert.year }})</p>
+            </div>
+            <div class="flip-card-back" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              {% if cert.image %}
+              <img src="{% static 'portfolio/images/certificates/' %}{{ cert.image }}" 
+                   alt="{{ cert.name }}" 
+                   class="preview-image" 
+                   style="max-width: 100%; max-height: 220px; border-radius: 10px; box-shadow: 0 0 12px #fde4c388; cursor: zoom-in;">
+              {% else %}
+              <p>No image available</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Fullscreen Image Modal -->
+  <div id="image-modal" class="image-modal" role="dialog" aria-modal="true" aria-label="Certificate Preview">
+    <div class="modal-card">
+      <button class="close-modal" aria-label="Close Preview">&times;</button>
+      <img id="modal-img" alt="Certificate Preview">
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="{% static 'portfolio/js/main.js' %}"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const searchInput = document.getElementById('cert-search');
+      const yearFilter = document.getElementById('cert-year');
+      const issuerFilter = document.getElementById('cert-issuer');
+      const cards = document.querySelectorAll('.flip-card');
+
+      const years = new Set();
+      const issuers = new Set();
+
+      cards.forEach(card => {
+        years.add(card.dataset.year);
+        issuers.add(card.dataset.issuer);
+      });
+
+      [...years].sort().forEach(y => {
+        yearFilter.innerHTML += `<option value="${y}">${y}</option>`;
+      });
+      [...issuers].sort().forEach(i => {
+        issuerFilter.innerHTML += `<option value="${i}">${i}</option>`;
+      });
+
+      function filterCards() {
+        const query = searchInput.value.toLowerCase();
+        const year = yearFilter.value;
+        const issuer = issuerFilter.value;
+
+        cards.forEach(card => {
+          const nameMatch = card.dataset.name.toLowerCase().includes(query);
+          const yearMatch = year === 'all' || card.dataset.year === year;
+          const issuerMatch = issuer === 'all' || card.dataset.issuer === issuer;
+
+          card.style.display = (nameMatch && yearMatch && issuerMatch) ? 'block' : 'none';
+        });
+      }
+
+      searchInput.addEventListener('input', filterCards);
+      yearFilter.addEventListener('change', filterCards);
+      issuerFilter.addEventListener('change', filterCards);
+
+      // Modal Preview
+      const modal = document.getElementById('image-modal');
+      const modalImg = document.getElementById('modal-img');
+      const closeBtn = document.querySelector('.close-modal');
+
+      document.querySelectorAll('.preview-image').forEach(img => {
+        img.addEventListener('click', () => {
+          modalImg.src = img.src;
+          modal.classList.add('show');
+        });
+      });
+
+      closeBtn.addEventListener('click', () => {
+        modal.classList.remove('show');
+        modalImg.src = '';
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          modal.classList.remove('show');
+          modalImg.src = '';
+        }
+      });
+
+      modal.addEventListener('click', e => {
+        if (e.target === modal) {
+          modal.classList.remove('show');
+          modalImg.src = '';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

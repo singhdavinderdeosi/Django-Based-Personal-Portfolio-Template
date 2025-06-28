@@ -1,0 +1,281 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Davinder Singh | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="{% static 'portfolio/images/favicon.png' %}" />
+  <link rel="stylesheet" href="{% static 'portfolio/css/style.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <script defer src="{% static 'portfolio/js/main.js' %}"></script>
+</head>
+
+<body>
+  <div id="scroll-progress"></div>
+
+  <!-- Navbar -->
+  <nav class="pill-navbar">
+    <img src="{% static 'portfolio/images/avtar.png' %}" alt="Avatar" class="navbar-avatar" />
+    <div class="brand">DAVINDER SINGH<br><small>Web Dev</small></div>
+    <a href="#hero" class="nav-link">Home</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#projects" class="nav-link">Projects</a>
+    <a href="#certificates" class="nav-link">Certificates</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </nav>
+
+  <!-- Hero -->
+<header id="hero" class="hero centered section scroll-fade"
+  style="background: linear-gradient(rgba(13, 13, 13, 0.9), rgba(13, 13, 13, 0.9)),
+         url('{% static 'portfolio/images/background_1.jpg' %}') center/cover no-repeat;">
+  
+  <img src="{% static 'portfolio/images/avtar.png' %}" alt="Profile Image" class="avatar-hero hero-avatar" />
+  
+  <h1 class="title">Hi, I’m Davinder Singh 👋</h1>
+  <h3 class="subtitle"><span id="typing"></span></h3>
+  
+  <p class="subtitle">
+    Crafting secure, scalable apps with Python & Django.<br>
+    Ethical hacking | Developer | cybersecurity enthusiast
+  </p>
+  
+  <div class="scroll-down">☟</div>
+</header>
+
+
+  <hr class="section-divider" />
+
+ <!-- About -->
+<section id="about" class="section scroll-fade parallax-about">
+  <div class="section-header center">
+    <h2 class="section-title">🧠 About Me</h2>
+  </div>
+
+  <div class="about-flex responsive-stack">
+    <!-- Animated 3D Avatar Frame -->
+    <div class="about-avatar-container scroll-fade">
+      <div class="avatar-frame-glow">
+        <img src="{% static 'portfolio/images/avatar.png' %}" alt="Davinder Avatar" class="avatar-full" />
+      </div>
+    </div>
+
+    <!-- Glass Info Card -->
+    <div class="about-glass-card glass-card scroll-fade">
+      <p class="about-line">
+        I'm a <span class="glow-text">Computer Applications</span> student at <strong>GNDEC Ludhiana</strong> passionate about building <span class="highlight">secure web apps</span> and exploring <span class="highlight">new tech</span>.
+      </p>
+      <p class="about-line">
+        I've built tools like <span class="glow-text">Total Recon</span> and <span class="glow-text">SecureFileX</span>, and participated & organized various technical event in college as Convenor & Co-Convenor of the Computonics Club.
+      </p>
+      <p class="about-line">
+        <strong>Tech Stack:</strong> <span class="highlight">Python</span>, <span class="highlight">Django Basics</span>, <span class="highlight">HTML</span>, <span class="highlight">CSS</span>.
+      </p>
+
+      <!-- Contact + Resume Links -->
+      <div class="about-links scroll-fade">
+        <a href="mailto:singh.deosidavinder@gmail.com" class="text-link glow-link" target="_blank">📧 Email</a>
+        <a href="https://github.com/singhdavinderdeosi" class="text-link glow-link" target="_blank">🌐 GitHub</a>
+        <a href="https://www.linkedin.com/in/davinder-singh-302494290" class="text-link glow-link" target="_blank">💼 LinkedIn</a>
+        <a href="{% static 'portfolio/files/Davinder_Singh_Resume.pdf' %}" class="text-link glow-link" target="_blank">📄 Resume</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <hr class="section-divider" />
+
+  <!-- Developer & Drive -->
+  <section id="dev-drive" class="section scroll-fade">
+    <div class="section-header">
+      <h2 class="section-title">💻 Developer & Drive</h2>
+    </div>
+    <div class="dual-cards">
+      <div class="glass-card dev-card full-typing">
+        <h3 class="dev-title">💻 Developer</h3>
+        <div id="devTyping" class="typing-bar expanded"></div>
+      </div>
+      <div class="glass-card drive-card">
+        <div class="code-snippet">
+<pre><code class="python" id="codeText">
+def say_my_name():
+    print("Davinder Singh")
+
+say_my_name()
+</code></pre>
+        </div>
+        <div class="drive-info">
+          <h4>🚀 What Drives Me</h4>
+          <p>I’m passionate about building secure and scalable web apps, contributing to open-source cybersecurity tools, and mentoring developers to grow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+<!-- Projects -->
+<section id="projects" class="section scroll-fade">
+  <div class="section-header">
+    <h2 class="section-title">⚙️ Featured Projects</h2>
+    <p class="section-label top-right">
+      <a href="{% url 'projects' %}" class="btn-icon-link">📂 View All</a>
+    </p>
+  </div>
+
+  <p class="section-description">
+    From secure systems to scalable apps — these featured projects reflect my passion for full-stack development and cybersecurity innovation.
+  </p>
+
+  <!-- Project Flip Cards -->
+  <div class="card-container flip-container" style="justify-content: center; gap: 20px; flex-wrap: wrap;">
+    {% for p in projects %}
+    <div class="flip-card scroll-fade" role="group" aria-label="{{ p.title }}">
+      <div class="flip-card-inner">
+
+        <!-- Front -->
+        <div class="flip-card-front glass-card">
+          <h3 class="project-title">{{ p.title }}</h3>
+          <p class="card-description">
+            {{ p.description|default:"No description available." }}
+          </p>
+        </div>
+
+        <!-- Back -->
+        <div class="flip-card-back" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px;">
+          <img 
+            src="{% if p.image %}{{ p.image }}{% elif 'github.com' in p.link %}https://opengraph.githubassets.com/1/{{ p.link|cut:'https://github.com/' }}{% else %}{% static 'portfolio/images/projects/default.png' %}{% endif %}" 
+            alt="{{ p.title }} Thumbnail"
+            class="project-thumbnail"
+            style="width: 100%; max-height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; box-shadow: 0 0 12px rgba(0,0,0,0.3);"
+          >
+
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <a href="{{ p.link }}" target="_blank" rel="noopener" class="text-link glow-link">🔗 GitHub Repo</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+  <hr class="section-divider" />
+
+<!-- Certificates -->
+<section id="certificates" class="section scroll-fade">
+  <div class="section-header">
+    <h2 class="section-title">📜 Certificates</h2>
+    <p class="section-label top-right">
+      <a href="{% url 'certificates' %}" class="btn-icon-link">📑 View All</a>
+    </p>
+  </div>
+  <p class="section-description">
+    Verified credentials from trusted platforms showcasing technical depth.
+  </p>
+
+  <div class="flip-container certificate-grid">
+    {% for cert in certificates|slice:":6" %}
+    <div class="flip-card scroll-fade" data-name="{{ cert.name }}" data-year="{{ cert.year }}" data-issuer="{{ cert.issuer }}">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <h3>{{ cert.name }}</h3>
+          <p>{{ cert.issuer }} ({{ cert.year }})</p>
+        </div>
+        <div class="flip-card-back">
+          {% if cert.image %}
+          <img src="{% static 'portfolio/images/certificates/' %}{{ cert.image }}"
+               alt="{{ cert.name }}"
+               class="preview-image"
+               style="max-width: 100%; max-height: 180px; border-radius: 8px; box-shadow: 0 0 10px #fde4c388; cursor: zoom-in;">
+          {% else %}
+          <p>{{ cert.description }}</p>
+          <a href="{{ cert.link }}" target="_blank" class="text-link">🔗 View Certificate</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Fullscreen Image Modal -->
+<div id="image-modal" class="image-modal" role="dialog" aria-modal="true" aria-label="Certificate Preview">
+  <div class="modal-card">
+    <button class="close-modal" aria-label="Close Preview">&times;</button>
+    <img id="modal-img" alt="Certificate Preview">
+  </div>
+</div>
+
+  <hr class="section-divider" />
+
+  <!-- Volunteer -->
+<section id="volunteer" class="section scroll-fade">
+  <h2 class="section-title">🤝 Volunteer Work</h2>
+  <p class="section-description">
+    Leadership and event execution experience through college societies and technical clubs.
+  </p>
+
+  <div id="volunteer-container" class="card-container flip-container" style="justify-content: center;">
+    {% for v in volunteers %}
+    <div class="flip-card scroll-fade" data-role="{{ v.role }}" data-org="{{ v.org }}" data-date="{{ v.date }}">
+      <div class="flip-card-inner">
+
+        <!-- Front -->
+        <div class="flip-card-front">
+          <h3>{{ v.role }}</h3>
+          <p><strong>{{ v.org }}</strong></p>
+          <p>{{ v.date }}</p>
+          <p class="small-text" style="margin-top: 10px;">{{ v.details }}</p>
+        </div>
+
+        <!-- Back -->
+        <div class="flip-card-back" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          {% if v.image %}
+          <img src="{% static 'portfolio/images/volunteer/' %}{{ v.image }}"
+               alt="{{ v.role }}"
+               class="preview-image"
+               style="max-width: 100%; max-height: 220px; border-radius: 10px; box-shadow: 0 0 12px #fde4c388; cursor: zoom-in;">
+          {% else %}
+          <p>Thanks for viewing!</p>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+  <hr class="section-divider" />
+
+<!-- Contact -->
+<section id="contact" class="section scroll-fade">
+  <div class="section-header center">
+    <h2 class="section-title">✉️ Contact</h2>
+    <p class="section-description">
+      I’m open to <span class="highlight">freelance work</span>, <span class="highlight">collaborations</span>, or just a good tech chat. Let’s connect!
+    </p>
+  </div>
+
+  <div class="contact-buttons-container center">
+    <a href="mailto:singh.deosidavinder@gmail.com" target="_blank" class="glass-button">
+      📧 Email Me
+    </a>
+    <a href="https://www.linkedin.com/in/davinder-singh-302494290" target="_blank" class="glass-button">
+      💼 LinkedIn
+    </a>
+    <a href="https://github.com/singhdavinderdeosi" target="_blank" class="glass-button">
+      🌐 GitHub
+    </a>
+  </div>
+</section>
+
+  <hr class="section-divider" />
+  <!-- Footer -->
+  <footer>
+    <p>© {{ 2025 }} Davinder Singh. Personal Portfolio.</p>
+  </footer>
+</body>
+</html>
