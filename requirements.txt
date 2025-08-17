@@ -1,0 +1,17 @@
+asgiref==3.9.1
+certifi==2025.8.3
+charset-normalizer==3.4.3
+dj-database-url==3.0.1
+dj-email-url==1.0.6
+Django==5.2.5
+django-cache-url==3.4.5
+environs==14.3.0
+idna==3.10
+marshmallow==4.0.0
+pillow==11.3.0
+python-dotenv==1.1.1
+requests==2.32.4
+setuptools==80.9.0
+sqlparse==0.5.3
+tzdata==2025.2
+urllib3==2.5.0

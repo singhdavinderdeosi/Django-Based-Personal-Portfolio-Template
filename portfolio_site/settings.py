@@ -1,12 +1,15 @@
 from pathlib import Path
+from environs import Env
 
 # === BASE DIRECTORY ===
 BASE_DIR = Path(__file__).resolve().parent.parent
+env = Env()
+env.read_env(str(BASE_DIR / '.env'))
 
 # === SECURITY SETTINGS ===
-SECRET_KEY = 'django-insecure-07%el%e2-ptvibg!v^w6kgv)h$=@7m4o6pst!n3pyfjtw4$(g3'
-DEBUG = True
-ALLOWED_HOSTS = ['*']  # For development; restrict in production
+SECRET_KEY = env.str('SECRET_KEY')
+DEBUG = env.bool('DEBUG', False)
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 # === APPLICATIONS ===
 INSTALLED_APPS = [
@@ -16,7 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'portfolio',  # Your portfolio app
+    'portfolio',
 ]
 
 # === MIDDLEWARE ===
@@ -37,7 +40,7 @@ ROOT_URLCONF = 'portfolio_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'portfolio' / 'templates'],  # ✅ CORRECTED PATH
+        'DIRS': [BASE_DIR / 'portfolio' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -57,7 +60,7 @@ WSGI_APPLICATION = 'portfolio_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / env.str('DB_FILE', 'db.sqlite3'),
     }
 }
 
@@ -70,8 +73,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # === LOCALIZATION ===
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Kolkata'
+LANGUAGE_CODE = env.str('LANGUAGE_CODE')
+TIME_ZONE = env.str('TIME_ZONE')
 USE_I18N = True
 USE_TZ = True
 
